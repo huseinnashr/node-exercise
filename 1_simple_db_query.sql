@@ -1,0 +1,1 @@
+SELECT u.Id, u.UserName, p.UserName as ParentUserName FROM User AS u LEFT JOIN User as p ON p.id = u.Parent;
