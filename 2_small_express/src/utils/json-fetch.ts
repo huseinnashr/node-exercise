@@ -1,3 +1,5 @@
+import { ClassConstructor, plainToClass } from 'class-transformer';
+import { validate } from 'class-validator';
 import fetch from 'node-fetch'
 
 type Method = "GET" 
@@ -8,7 +10,7 @@ type FetchOption = {
   headers?: any,
 }
 
-export async function jsonFetch<R = any>(endpoint: string, options: FetchOption): Promise<[R?, AppError?]> {
+export async function jsonFetch<R = any>(endpoint: string, options: FetchOption, cls: ClassConstructor<R> = null): Promise<[R?, AppError?]> {
   let res = null;
   try {
     res = await fetch(endpoint, options);
@@ -25,5 +27,15 @@ export async function jsonFetch<R = any>(endpoint: string, options: FetchOption)
     return [null, { message: `Failed to parse ${text}` }]
   }
 
-  return [json, null]
+  if(!cls) return [json, null]
+
+  const object = plainToClass(cls, json, { excludeExtraneousValues: true });
+  const objectValidateErr = await validate(object as any);
+
+  if(objectValidateErr.length > 0) {
+    console.debug("Failed to validate response", JSON.stringify(object))
+    return [null, { message: JSON.stringify(objectValidateErr.map((v) => ({ value: v.value, message: v.constraints }))) }]
+  }
+
+  return [object, null]
 }
