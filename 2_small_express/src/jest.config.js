@@ -6,5 +6,5 @@ module.exports = {
       tsonfig: "tsconfig.test.json",
     },
   },
-  "testRegex": ".*.test.(js|ts)"
+  "testRegex": ".*.(test|spec).(js|ts)"
 };
