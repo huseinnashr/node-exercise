@@ -1,8 +1,8 @@
-type AppError = {
+export type AppError = {
   message: string
 }
 
-type ApiError = {
+export type ApiError = {
   isClient: boolean
   message: string
 }

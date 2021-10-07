@@ -2,6 +2,7 @@ import { jsonFetch } from "../utils/json-fetch";
 import * as qs from 'querystring';
 import { ClassConstructor, Expose } from "class-transformer";
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { ApiError, AppError } from "../definition/common";
 
 export enum MovieTypeEnum { 
   movies = "movies",

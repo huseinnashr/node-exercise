@@ -1,8 +1,10 @@
+import "reflect-metadata"
 import { createExpressServer } from 'routing-controllers';
-import { IndexController } from './controllers/IndexController';
+import { IndexController } from './controllers/index/IndexController';
+import { MovieController } from './controllers/movie/MovieController';
 
 const app = createExpressServer({
-  controllers: [IndexController],
+  controllers: [IndexController, MovieController],
 });
 
 app.listen(process.env.PORT, () => {

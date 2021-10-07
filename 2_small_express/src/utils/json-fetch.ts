@@ -1,6 +1,7 @@
 import { ClassConstructor, plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 import fetch from 'node-fetch'
+import { AppError } from '../definition/common';
 
 type Method = "GET" 
 
