@@ -3,6 +3,7 @@ import * as qs from 'querystring';
 import { ClassConstructor, Expose } from "class-transformer";
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
 import { ApiError, AppError } from "../definition/common";
+import { models } from "../models";
 
 export enum MovieTypeEnum { 
   movies = "movies",
@@ -79,10 +80,12 @@ export class OmdbService {
   private async send<T>(path: string, params: any, cls: ClassConstructor<T>): Promise<[T?, AppError?]> {
     const queries = qs.stringify({ ...params, apikey: this.apiKey });
     const endpoint = `${this.apiUrl}${path}/?${queries}`;
-
+    
     const [fetchRes, fetchErr] = await jsonFetch(endpoint, { method: "GET",  headers: { 'content-type': "application/json" } }, cls);
     if(fetchErr) return [null, fetchErr]
 
+    await models.OmdbApiRecord.create({ endpoint: `${this.apiUrl}${path}`, params: JSON.stringify(params) })
+    
     return [fetchRes, null]
   }
 
