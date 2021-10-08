@@ -1,5 +1,7 @@
 # 2 Small Express - OMDB Api
 
+## See live at
+https://simple-omdb.herokuapp.com/
 ## How To Run
 1. Install node (test on v10.24.1)
 2. Install docker & docker-compose
