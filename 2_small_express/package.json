@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "env-cmd -f ./.prod.env ts-node src/index.ts",
     "test": "env-cmd jest",
     "dev": "env-cmd ts-node-dev src/index.ts"
   },
